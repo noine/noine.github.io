@@ -1,0 +1,9 @@
+<script>
+  var yqlCallback = function(data) {
+    console.log(data);
+    var photo = data.query.results.photo[0];
+    alert(photo.title);
+  };
+</script>
+ 
+<script src="https://query.yahooapis.com/v1/public/yql?q=select * from flickr.photos.search where has_geo='true' and tags='New York City' and api_key='3073d86b462d5f1f1aeec9488f65e4ae'&format=json&callback=yqlCallback"></script>
