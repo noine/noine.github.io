@@ -29,8 +29,9 @@
 			
 		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
+
 		$.ajax({
-			typq: "GET"
+			type: "GET"
 			,url: request
 			,dataType: "xml"
 			,async: false
