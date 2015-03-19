@@ -27,7 +27,7 @@
 		 */
 		var signature = MD5(sig); 
 			
-		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature + "&format=json";
+		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature";
 		console.log("GET frob request: " + request); 
 		
 		data = $.parseXML(request);
