@@ -31,26 +31,30 @@
 		console.log("GET frob request: " + request); 
 
 		var frob;
+		var token;
 
-		$.ajax({
-			type: "GET"
-			,url: request
-			,dataType: "xml"
-			,success: function(xml){
-				if($(xml).find("frob").length>0)
-				{
-					frob = $(xml).find("frob").text();	
-					console.log("Successfully retrieved frob: " + frob);
+		function getFrob()
+		{
+			$.ajax({
+				type: "GET"
+				,url: request
+				,dataType: "xml"
+				,success: function(xml){
+					if($(xml).find("frob").length>0)
+					{
+						frob = $(xml).find("frob").text();	
+						console.log("Successfully retrieved frob: " + frob);
+						getToken();
+					}
+					else
+					{
+						var code = $(xml).find("err").attr("code");	
+						var msg = $(xml).find("err").attr("msg");	
+						console.log("Flickr request failed with error code " + code + ", " + msg);
+					}
 				}
-				else
-				{
-					var code = $(xml).find("err").attr("code");	
-					var msg = $(xml).find("err").attr("msg");	
-					console.log("Flickr request failed with error code " + code + ", " + msg);
-				}
-			}
-		});
-
+			});
+		}
 		
 		/**
 		 * Create a Flickr login link
@@ -79,29 +83,30 @@
 		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 			
-		var token;
 
-		$.ajax({
-			type: "GET"
-			,url: request
-			,dataType: "xml"
-			,success: function(xml){
-				if($(xml).find("token").length>0)
-				{
-					token = $(xml).find("token").text();	
-					console.log("Successfully retrieved token: " + token);
-					console.log("Auth token successfully received. Move on to FlickrRotate example.");
+		function getToken()
+		{
+			$.ajax({
+				type: "GET"
+				,url: request
+				,dataType: "xml"
+				,success: function(xml){
+					if($(xml).find("token").length>0)
+					{
+						token = $(xml).find("token").text();	
+						console.log("Successfully retrieved token: " + token);
+						console.log("Auth token successfully received. Move on to FlickrRotate example.");
+					}
+					else
+					{
+						var code = $(xml).find("err").attr("code");	
+						var msg = $(xml).find("err").attr("msg");	
+						console.log("Flickr request failed with error code " + code + ", " + msg);
+						console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
+					}
 				}
-				else
-				{
-					var code = $(xml).find("err").attr("code");	
-					var msg = $(xml).find("err").attr("msg");	
-					console.log("Flickr request failed with error code " + code + ", " + msg);
-					console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
-				}
-			}
-		});
-
+			});
+		}
 	
 		/**
 		 * Now that we have authenticated with Flickr and obtained an auth
@@ -109,6 +114,8 @@
 		 * example to see a live example of the Flickr API.
 		 */		    	
 
-
+		$(document).ready(
+			getFrob();
+		);
 //-->
 </script>
