@@ -4,6 +4,7 @@
 var apiKey = '3073d86b462d5f1f1aeec9488f65e4ae'
 var secretKey = '695c050214a51160'
 var apiSig = '54bdc63c961d0788beb975bd9c3cf692'
+var authSign='72157651018595149-8c6c4ef633147ef3-227034'
 /*
 var apiKey = '9a0554259914a86fb9e7eb014e4e5d52'
 var secretKey = '000005fab4534d05'
@@ -18,10 +19,16 @@ var temp = MD5(strMD5);
 
 var methodGetFrob = "flickr.auth.getFrob";
 var sig = secretKey + "api_key" + apiKey + "method" + methodGetFrob;
-var signature = MD5(sig)
-document.write(">>"+signature+"<<");
-//String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=54bdc63c961d0788beb975bd9c3cf692";
+var signature = MD5(sig);//f90eaa29f8965c020518963d899895e1
+//document.write(">>"+signature+"<<");
+//String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=f90eaa29f8965c020518963d899895e1";
 
+
+var methodGetFrob = "flickr.photos.search";
+var sig = secretKey + "api_key" + apiKey + "method" + methodGetFrob;
+var signature = MD5(sig);//f90eaa29f8965c020518963d899895e1
+document.write(">>"+signature+"<<");
+//String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=f90eaa29f8965c020518963d899895e1";
 </script>
 
 <!--
