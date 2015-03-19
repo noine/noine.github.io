@@ -13,10 +13,14 @@
 		var secret = "695c050214a51160";
 
 		var frob = "";
+		var arr_frob;
+		var frob1;
+
 		var token = "";
 		var sig = "";
 		var signature = ""
 		var request = "";
+
 
 		function getFrob()
 		{
@@ -47,7 +51,10 @@
 					if($(xml).find("frob").length>0)
 					{
 						frob = $(xml).find("frob").text();	
+						arr_frob = frob.split("-");
+						if(arr_frob.length>1)frob1 = arr_frob[0] + "-" + arr_frob[1];
 						console.log("Successfully retrieved frob: " + frob);
+						console.log("Successfully retrieved frob1: " + frob1);
 						getToken();
 						getLoginLink();
 					}
@@ -69,9 +76,9 @@
 			 * http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
 			 * We are using "write" for the perms value because we will be rotating an image. 
 			 */
-			sig = secret + "api_key" + key + "frob" + frob + "permsread";
+			sig = secret + "api_key" + key + "frob" + frob1 + "permsread";
 			signature = MD5(sig);
-			request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
+			request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob1 + "&api_sig=" + signature;
 			
 			/**
 			 * Copy/paste the generated link into your favorite web browser and follow the instructions
@@ -92,7 +99,7 @@
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
 		signature = MD5(sig);
-		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob1 + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 
 			$.ajax({
