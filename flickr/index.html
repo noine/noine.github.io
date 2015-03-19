@@ -40,7 +40,7 @@
 		 */
 		signature = MD5(sig); 
 			
-		request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
+		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
 
 			$.ajax({
@@ -78,7 +78,7 @@
 			 */
 			sig = secret + "api_key" + key + "frob" + frob + "permsread";
 			signature = MD5(sig);
-			request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
+			request = "https://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
 			
 			/**
 			 * Copy/paste the generated link into your favorite web browser and follow the instructions
@@ -99,7 +99,7 @@
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
 		signature = MD5(sig);
-		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 
 			$.ajax({
