@@ -24,8 +24,8 @@ var signature = MD5(sig);//f90eaa29f8965c020518963d899895e1
 //String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=f90eaa29f8965c020518963d899895e1";
 
 
-methodGetToken = "flickr.auth.getToken";
-sig = secretKey + "api_key" + apiKey + "frob" + frob + "method" + methodGetFrob;
+var methodGetToken = "flickr.auth.getToken";
+sig = secretKey + "api_key" + apiKey + "frob" + frob + "method" + methodGetToken;
 signature = MD5(sig);
 document.write(">>"+signature+"<<");
 var request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
