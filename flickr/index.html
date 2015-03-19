@@ -34,7 +34,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "GET"
-			,url: request
+			,url: "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=f90eaa29f8965c020518963d899895e1"
 			,dataType: "xml"
 			,success: function(xml){
 				alert(xml);
