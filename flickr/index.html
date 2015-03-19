@@ -11,6 +11,15 @@
 		 */
 		var key = "3073d86b462d5f1f1aeec9488f65e4ae";
 		var secret = "695c050214a51160";
+
+		var frob = "";
+		var token = "";
+		var sig = "";
+		var signature = ""
+		var request = "";
+
+		function getFrob()
+		{
 			
 		/**
 		 * Request a frob to identify the login session. This call requires 
@@ -20,21 +29,16 @@
 		 * shown in the following line.
 		**/
 		var methodGetFrob = "flickr.auth.getFrob";
-		var sig = secret + "api_key" + key + "method" + methodGetFrob;
+		sig = secret + "api_key" + key + "method" + methodGetFrob;
 		
 		/**
 		 * The API signature must be MD5 encoded and appended to the request
 		 */
-		var signature = MD5(sig); 
+		signature = MD5(sig); 
 			
-		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
+		request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
 
-		var frob;
-		var token;
-
-		function getFrob()
-		{
 			$.ajax({
 				type: "GET"
 				,url: request
@@ -74,6 +78,10 @@
 		//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
 		//var line = infile.readLine();
 		   
+			
+
+		function getToken()
+		{
 		/**
 		 * Get auth token using frob. Once again, a signature is required
 		 * for authenticated calls to the Flickr API.  
@@ -83,10 +91,7 @@
 		signature = MD5(sig);
 		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
-			
 
-		function getToken()
-		{
 			$.ajax({
 				type: "GET"
 				,url: request
