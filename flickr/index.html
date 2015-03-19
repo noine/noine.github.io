@@ -30,7 +30,8 @@
 		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature + "&format=json";
 		console.log("GET frob request: " + request); 
 		
-		$.getJSON(request, function(data) {
+		data = $.parseXML(request);
+		//$.getJSON(request, function(data) {
 			document.write(data);
 			/*
 			$.each(data.sizes.size, function(i, datum) {
@@ -42,7 +43,7 @@
 				});
 			});
 			*/
-		});
+		//});
 
 		//HttpClient client = new HttpClient();
 		//GetMethod method = new GetMethod(request);
