@@ -43,7 +43,7 @@
 				type: "GET"
 				,url: request
 				,dataType: "xml"
-				,success: function(xml){ alert($(xml).find("frob").text());
+				,success: function(xml){ 
 					if($(xml).find("frob").length>0)
 					{
 						frob = $(xml).find("frob").text();	
