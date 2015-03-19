@@ -28,135 +28,80 @@
 		var signature = MD5(sig); 
 			
 		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
-		//console.log("GET frob request: " + request); 
+		console.log("GET frob request: " + request); 
 
-
+		var frob;
 
 		$.ajax({
 			type: "GET"
 			,url: request
 			,dataType: "xml"
 			,success: function(xml){
-				var frob = $(xml).find("frob").text();				
-				//data = $.parseXML(xml);
-				document.write(frob);
-				
+				if($(xml).find("frob").length>0)
+				{
+					frob = $(xml).find("frob").text();	
+					console.log("Successfully retrieved frob: " + frob);
+				}
+				else
+				{
+					var code = $(xml).find("err").attr("code");	
+					var msg = $(xml).find("err").attr("msg");	
+					console.log("Flickr request failed with error code " + code + ", " + msg);
+				}
 			}
 		});
-		//data = $.parseXML(request);
-		//$.getJSON(request, function(data) {
-			
-			/*
-			$.each(data.sizes.size, function(i, datum) {
-				$.each(datum, function(key, value) {
-					if (key === "label" && value === "Original") {
-						largeSRC = datum.source;
-						alert(largeSRC);
-					}
-				});
-			});
-			*/
-		//});
 
-		//HttpClient client = new HttpClient();
-		//GetMethod method = new GetMethod(request);
 		
-		//// Send GET request
-		//int statusCode = client.executeMethod(method);
+		/**
+		 * Create a Flickr login link
+		 * http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
+		 * We are using "write" for the perms value because we will be rotating an image. 
+		 */
+		sig = secret + "api_key" + key + "frob" + frob + "permsread";
+		signature = MD5(sig);
+		request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
 		
-		//if (statusCode != HttpStatus.SC_OK) {
-			//System.err.println("Method failed: " + method.getStatusLine());
-		//}
-		//InputStream rstream = null;
-		
-		//// Get the response body
-		//rstream = method.getResponseBodyAsStream();
-		
-		///**
-		 //* Retrieve the XML response to the frob request and get the frob value.
-		 //*/
-		//Document response = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(rstream);
-		
-		//var frob = null;
-		
-		//// Check if frob is in the response
-		//NodeList frobResponse = response.getElementsByTagName("frob");
-		//Node frobNode = frobResponse.item(0);
-		//if (frobNode != null) {
-			//frob = frobNode.getTextContent();
-			//console.log("Successfully retrieved frob: " + frob);
-		//} else {
-			//// Get Flickr error code and msg
-			//NodeList error = response.getElementsByTagName("err");
-			//var code = error.item(0).getAttributes().item(0).getTextContent();
-			//var msg = error.item(0).getAttributes().item(1).getTextContent();
-			//console.log("Flickr request failed with error code " + code + ", " + msg);
-			//return;
-		//}
-		
-		///**
-		 //* Create a Flickr login link
-		 //* http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
-		 //* We are using "write" for the perms value because we will be rotating an image. 
-		 //*/
-		//sig = secret + "api_key" + key + "frob" + frob + "permswrite";
-		//signature = MD5(sig);
-		//request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=write&frob=" + frob + "&api_sig=" + signature;
-		
-		///**
-		 //* Copy/paste the generated link into your favorite web browser and follow the instructions
-		 //*/
-		//console.log("Browse to the following flickr url to authenticate yourself and then press enter.");
-		//console.log(request);
+		/**
+		 * Copy/paste the generated link into your favorite web browser and follow the instructions
+		 */
+		console.log("Browse to the following flickr url to authenticate yourself and then press enter.");
+		console.log(request);
 		//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
 		//var line = infile.readLine();
 		   
-		///**
-		 //* Get auth token using frob. Once again, a signature is required
-		 //* for authenticated calls to the Flickr API.  
-		 //*/
-		//var methodGetToken = "flickr.auth.getToken";
-		//sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
-		//signature = MD5(sig);
-		//request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
-		//console.log("Token request: " + request);
+		/**
+		 * Get auth token using frob. Once again, a signature is required
+		 * for authenticated calls to the Flickr API.  
+		 */
+		var methodGetToken = "flickr.auth.getToken";
+		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
+		signature = MD5(sig);
+		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		console.log("Token request: " + request);
 			
-		//method = new GetMethod(request);
-			
-		//// Send GET request
-		//statusCode = client.executeMethod(method);
-		
-		//if (statusCode != HttpStatus.SC_OK) {
-			//System.err.println("Method failed: " + method.getStatusLine());
-		//}
-		
-		//rstream = null;
-		
-		//// Get the response body
-		//rstream = method.getResponseBodyAsStream();
-		///**
-		 //* Retrieve the XML response to the token request and get the token value
-		 //*/
-		//response = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(rstream);
-		
-		//var token = null;
-		
-		//// Check if token is in the response
-		//NodeList tokenResponse = response.getElementsByTagName("token");
-		//Node tokenNode = tokenResponse.item(0);
-		//if (tokenNode != null) {
-			//token = tokenNode.getTextContent();
-			//console.log("Successfully retrieved token: " + token);
-			//console.log("Auth token successfully received. Move on to FlickrRotate example.");
-		//} else {
-			//NodeList error = response.getElementsByTagName("err");
-			//// Get Flickr error code and msg
-			//var code = error.item(0).getAttributes().item(0).getTextContent();
-			//var msg = error.item(0).getAttributes().item(1).getTextContent();
-			//console.log("Flickr request failed with error code " + code + ", " + msg);
-			//console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
-			//return;
-		//}
+		var token;
+
+		$.ajax({
+			type: "GET"
+			,url: request
+			,dataType: "xml"
+			,success: function(xml){
+				if($(xml).find("token").length>0)
+				{
+					token = $(xml).find("token").text();	
+					console.log("Successfully retrieved token: " + token);
+					console.log("Auth token successfully received. Move on to FlickrRotate example.");
+				}
+				else
+				{
+					var code = $(xml).find("err").attr("code");	
+					var msg = $(xml).find("err").attr("msg");	
+					console.log("Flickr request failed with error code " + code + ", " + msg);
+					console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
+				}
+			}
+		});
+
 	
 		/**
 		 * Now that we have authenticated with Flickr and obtained an auth
