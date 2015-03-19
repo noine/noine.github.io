@@ -1,5 +1,6 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js">
 <!-- script type="text/javascript" src="./js/MD5.js"></script -->
 
 
@@ -38,7 +39,7 @@
 		/**
 		 * The API signature must be MD5 encoded and appended to the request
 		 */
-		signature = $.md5(sig); 
+		signature = CryptoJS.MD5(sig); 
 			
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
@@ -77,7 +78,7 @@
 			 * We are using "write" for the perms value because we will be rotating an image. 
 			 */
 			sig = secret + "api_key" + key + "frob" + frob + "permsread";
-			signature = $.md5(sig);
+			signature = CryptoJS.MD5(sig);
 			request = "https://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
 			
 			/**
@@ -98,7 +99,7 @@
 		 */
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
-		signature = $.md5(sig);
+		signature = CryptoJS.MD5(sig);
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 
