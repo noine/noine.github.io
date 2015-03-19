@@ -12,8 +12,17 @@ var apiSig = '124cdc261e03fc6c9f57d5a832c44735'
 
 var strMD5 = secretKey + 'api_key' + apiKey + 'perms' + 'read'
 var temp = MD5(strMD5);
-document.write(">>"+temp+"<<");
+//document.write(">>"+temp+"<<");
+
+
+var methodGetFrob = "flickr.auth.getFrob";
+var sig = secretKey + "api_key" + apiKey + "method" + methodGetFrob;
+var signature = MD5(sig)
+document.write(">>"+signature+"<<");
+//String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getFrob&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=54bdc63c961d0788beb975bd9c3cf692";
 </script>
 
+<!--
 <BR/>http://flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&api_sig=[api_sig]
 <BR/>http://www.flickr.com/services/auth/?api_key=3073d86b462d5f1f1aeec9488f65e4ae&perms=read&api_sig=54bdc63c961d0788beb975bd9c3cf692
+-->
