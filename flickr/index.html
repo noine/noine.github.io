@@ -49,6 +49,7 @@
 						frob = $(xml).find("frob").text();	
 						console.log("Successfully retrieved frob: " + frob);
 						getToken();
+						getLoginLink();
 					}
 					else
 					{
@@ -61,23 +62,25 @@
 			});
 		}
 		
-		/**
-		 * Create a Flickr login link
-		 * http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
-		 * We are using "write" for the perms value because we will be rotating an image. 
-		 */
-		sig = secret + "api_key" + key + "frob" + frob + "permsread";
-		signature = MD5(sig);
-		request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
-		
-		/**
-		 * Copy/paste the generated link into your favorite web browser and follow the instructions
-		 */
-		console.log("Browse to the following flickr url to authenticate yourself and then press enter.");
-		console.log(request);
-		//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
-		//var line = infile.readLine();
-		   
+		function getLoginLink()
+		{
+			/**
+			 * Create a Flickr login link
+			 * http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
+			 * We are using "write" for the perms value because we will be rotating an image. 
+			 */
+			sig = secret + "api_key" + key + "frob" + frob + "permsread";
+			signature = MD5(sig);
+			request = "http://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
+			
+			/**
+			 * Copy/paste the generated link into your favorite web browser and follow the instructions
+			 */
+			console.log("Browse to the following flickr url to authenticate yourself and then press enter.");
+			console.log(request);
+			//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
+			//var line = infile.readLine();
+		}
 			
 
 		function getToken()
