@@ -1,0 +1,19 @@
+
+<script type="text/javascript" src="./js/MD5.js"></script>
+<script type="text/javascript">
+var apiKey = '3073d86b462d5f1f1aeec9488f65e4ae'
+var secretKey = '695c050214a51160'
+var apiSig = '54bdc63c961d0788beb975bd9c3cf692'
+/*
+var apiKey = '9a0554259914a86fb9e7eb014e4e5d52'
+var secretKey = '000005fab4534d05'
+var apiSig = '124cdc261e03fc6c9f57d5a832c44735'
+*/
+
+var strMD5 = secretKey + 'api_key' + apiKey + 'perms' + 'read'
+var temp = MD5(strMD5);
+document.write(">>"+temp+"<<");
+</script>
+
+<BR/>http://flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&api_sig=[api_sig]
+<BR/>http://www.flickr.com/services/auth/?api_key=3073d86b462d5f1f1aeec9488f65e4ae&perms=read&api_sig=54bdc63c961d0788beb975bd9c3cf692
