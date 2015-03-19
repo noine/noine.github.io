@@ -29,10 +29,19 @@
 			
 		var request = "http://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
-		
-		data = $.parseXML(request);
+		$.ajax({
+			typq: "GET"
+			,url: request
+			,dataType: "xml"
+			,async: false
+			,success: function(xml){
+				document.write(data);
+				
+			}
+		});
+		//data = $.parseXML(request);
 		//$.getJSON(request, function(data) {
-			document.write(data);
+			
 			/*
 			$.each(data.sizes.size, function(i, datum) {
 				$.each(datum, function(key, value) {
