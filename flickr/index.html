@@ -97,7 +97,7 @@
 		 * for authenticated calls to the Flickr API.  
 		 */
 		var methodGetToken = "flickr.auth.getToken";
-		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
+		sig = secret + "api_key" + key + "frob" + frob1 + "method" + methodGetToken;
 		signature = MD5(sig);
 		request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob1 + "&api_sig=" + signature;
 		console.log("Token request: " + request);
