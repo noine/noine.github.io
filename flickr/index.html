@@ -37,8 +37,9 @@
 			,url: request
 			,dataType: "xml"
 			,success: function(xml){
-				alert(xml);
-				//document.write(xml);
+				var frob = $(xml).find("frob").text();				
+				//data = $.parseXML(xml);
+				document.write(frob);
 				
 			}
 		});
