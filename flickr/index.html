@@ -27,6 +27,7 @@ var signature = MD5(sig);//f90eaa29f8965c020518963d899895e1
 methodGetToken = "flickr.auth.getToken";
 sig = secretKey + "api_key" + apiKey + "frob" + frob + "method" + methodGetFrob;
 signature = MD5(sig);
+document.write(">>"+signature+"<<");
 var request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 
 //String request = "http://api.flickr.com/services/rest/?method=flickr.auth.getToken&api_key=3073d86b462d5f1f1aeec9488f65e4ae&api_sig=";
@@ -36,12 +37,11 @@ var request = "http://api.flickr.com/services/rest/?method=" + methodGetToken + 
 <BR/>http://flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&api_sig=[api_sig]
 <BR/>http://www.flickr.com/services/auth/?api_key=3073d86b462d5f1f1aeec9488f65e4ae&perms=read&api_sig=54bdc63c961d0788beb975bd9c3cf692
 <<<<<<< HEAD
--->
+
 =======
 
 
 
 https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=c3c6b55e576bcc4e0352dd6fc9895d12&user_id=96191539%40N04&tags=%EB%B8%94%EB%9D%BC%EB%94%94%EB%B3%B4%EC%8A%A4%ED%86%A1&format=json&nojsoncallback=1&auth_token=72157651018400369-06207fc20f010ea4&api_sig=77e357f5b4985be11313f53e7fc51a14
 
-
->>>>>>> origin/master
+-->
