@@ -8,8 +8,9 @@ function testFlickrAPI(proxied) {
 
   // plain Flickr access with API key
   else {
-    api_key = document.getElementById("api_key").value;
-    flickr = new Flickr({ api_key: api_key });
+    api_key = "3073d86b462d5f1f1aeec9488f65e4ae";//document.getElementById("api_key").value;
+    s = "695c050214a51160";
+    flickr = new Flickr({ api_key: api_key, secret: s });
   }
 
   // run a search.
