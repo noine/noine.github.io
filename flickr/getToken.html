@@ -39,7 +39,7 @@
 		/**
 		 * The API signature must be MD5 encoded and appended to the request
 		 */
-		signature = CryptoJS.MD5(sig); 
+		signature = MD5(sig); 
 			
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
