@@ -110,7 +110,7 @@
 			 * We are using "write" for the perms value because we will be rotating an image. 
 			 */
 			sig = secret + "api_key" + key + "frob" + frob + "permsread";
-			signature = CryptoJS.MD5(sig);
+			signature = MD5(sig);
 			request = "https://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
 			
 			/**
@@ -132,7 +132,7 @@
 		frob = getParameterByName("frob");
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
-		signature = CryptoJS.MD5(sig);
+		signature = MD5(sig);
 		request = "https://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 
