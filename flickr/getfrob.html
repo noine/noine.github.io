@@ -91,7 +91,7 @@
 		 */
 		signature = MD5(sig); 
 			
-		request = "https://flickr.com/services/auth/?" + "&api_key=" + key + "&perms=read&api_sig=" + signature;
+		request = "http://flickr.com/services/auth/?" + "&api_key=" + key + "&perms=read&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
 		froblink = "<a href='"+request+"'>Get Forb&Token</a>"
 		document.write(froblink);
