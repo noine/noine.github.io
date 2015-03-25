@@ -43,7 +43,8 @@
 			
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&perms=read&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
-
+		document.write(request);
+/*
 			$.ajax({
 				type: "GET"
 				,url: request
@@ -68,6 +69,7 @@
 					}
 				}
 			});
+*/
 		}
 		
 
@@ -172,8 +174,7 @@
 		}
 
 		$(document).ready(function(){
-			//getFrob();
-			alert(getParameterByName("frob"));
+			getFrob();
 		});
 //-->
 </script>
