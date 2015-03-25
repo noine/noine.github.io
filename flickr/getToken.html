@@ -23,6 +23,54 @@
 		var request = "";
 
 
+		function getFrob2()
+		{
+			
+		/**
+		 * Request a frob to identify the login session. This call requires 
+		 * a signature. The signature starts with your shared secret and
+		 * is followed by your API key and the method name. The API key and
+		 * method name are prepended by the words "api_key" and "method" as
+		 * shown in the following line.
+		**/
+		var methodGetFrob = "flickr.auth.getFrob";
+		sig = secret + "api_key" + key + "method" + methodGetFrob;
+		
+		/**
+		 * The API signature must be MD5 encoded and appended to the request
+		 */
+		signature = CryptoJS.MD5(sig); 
+			
+		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
+		console.log("GET frob request: " + request); 
+
+			$.ajax({
+				type: "GET"
+				,url: request
+				,dataType: "xml"
+				,success: function(xml){ 
+					if($(xml).find("frob").length>0)
+					{
+						frob = $(xml).find("frob").text();	
+						arr_frob = frob.split("-");
+						if(arr_frob.length>1)frob1 = arr_frob[0] + "-" + arr_frob[1];
+						console.log("Successfully retrieved frob: " + frob);
+						console.log("Successfully retrieved frob1: " + frob1);
+						getToken();
+						getLoginLink();
+					}
+					else
+					{
+						var code = $(xml).find("err").attr("code");	
+						var msg = $(xml).find("err").attr("msg");	
+						console.log("Flickr request failed with error code " + code + ", " + msg);
+						return;
+					}
+				}
+			});
+		}
+		
+
 		function getFrob()
 		{
 			
@@ -132,7 +180,7 @@
 		 */		    	
 
 		$(document).ready(function(){
-			getFrob();
+			getFrob2();
 		});
 //-->
 </script>
