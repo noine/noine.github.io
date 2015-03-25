@@ -1,0 +1,138 @@
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!-- script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js" -->
+<script type="text/javascript" src="./js/MD5.js"></script>
+
+
+<script type="text/javascript">
+<!--
+		/**
+		 * Use the key and secret provided when you registered your application
+		 * http://www.flickr.com/services/api/keys/apply/
+		 */
+		var key = "3073d86b462d5f1f1aeec9488f65e4ae";
+		var secret = "695c050214a51160";
+
+		var frob = "";
+		var arr_frob;
+		var frob1;
+
+		var token = "";
+		var sig = "";
+		var signature = ""
+		var request = "";
+
+
+		function getFrob()
+		{
+			
+		/**
+		 * Request a frob to identify the login session. This call requires 
+		 * a signature. The signature starts with your shared secret and
+		 * is followed by your API key and the method name. The API key and
+		 * method name are prepended by the words "api_key" and "method" as
+		 * shown in the following line.
+		**/
+		var methodGetFrob = "";
+		sig = secret + "api_key" + key + "permsread";
+		
+		/**
+		 * The API signature must be MD5 encoded and appended to the request
+		 */
+		signature = CryptoJS.MD5(sig); 
+			
+		request = "https://flickr.com/services/auth/?" + "&api_key=" + key + "&perms=read&api_sig=" + signature;
+		console.log("GET frob request: " + request); 
+
+			$.ajax({
+				type: "GET"
+				,url: request
+				,dataType: "xml"
+				,success: function(xml){ 
+					if($(xml).find("frob").length>0)
+					{
+						frob = $(xml).find("frob").text();	
+						arr_frob = frob.split("-");
+						if(arr_frob.length>1)frob1 = arr_frob[0] + "-" + arr_frob[1];
+						console.log("Successfully retrieved frob: " + frob);
+						console.log("Successfully retrieved frob1: " + frob1);
+						//getToken();
+						//getLoginLink();
+					}
+					else
+					{
+						var code = $(xml).find("err").attr("code");	
+						var msg = $(xml).find("err").attr("msg");	
+						console.log("Flickr request failed with error code " + code + ", " + msg);
+						return;
+					}
+				}
+			});
+		}
+		
+		function getLoginLink()
+		{
+			/**
+			 * Create a Flickr login link
+			 * http://www.flickr.com/services/auth/?api_key=[api_key]&perms=[perms]&frob=[frob]&api_sig=[api_sig]
+			 * We are using "write" for the perms value because we will be rotating an image. 
+			 */
+			sig = secret + "api_key" + key + "frob" + frob + "permsread";
+			signature = CryptoJS.MD5(sig);
+			request = "https://www.flickr.com/services/auth/?api_key=" + key + "&perms=read&frob=" + frob + "&api_sig=" + signature;
+			
+			/**
+			 * Copy/paste the generated link into your favorite web browser and follow the instructions
+			 */
+			console.log("Browse to the following flickr url to authenticate yourself and then press enter.");
+			console.log(request);
+			//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
+			//var line = infile.readLine();
+		}
+			
+
+		function getToken()
+		{
+		/**
+		 * Get auth token using frob. Once again, a signature is required
+		 * for authenticated calls to the Flickr API.  
+		 */
+		var methodGetToken = "flickr.auth.getToken";
+		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
+		signature = CryptoJS.MD5(sig);
+		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		console.log("Token request: " + request);
+
+			$.ajax({
+				type: "GET"
+				,url: request
+				,dataType: "xml"
+				,success: function(xml){
+					if($(xml).find("token").length>0)
+					{
+						token = $(xml).find("token").text();	
+						console.log("Successfully retrieved token: " + token);
+						console.log("Auth token successfully received. Move on to FlickrRotate example.");
+					}
+					else
+					{
+						var code = $(xml).find("err").attr("code");	
+						var msg = $(xml).find("err").attr("msg");	
+						console.log("Flickr request failed with error code " + code + ", " + msg);
+						console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
+					}
+				}
+			});
+		}
+	
+		/**
+		 * Now that we have authenticated with Flickr and obtained an auth
+		 * token with write privileges, continue on to the FlickrRotate
+		 * example to see a live example of the Flickr API.
+		 */		    	
+
+		$(document).ready(function(){
+			getFrob();
+		});
+//-->
+</script>
