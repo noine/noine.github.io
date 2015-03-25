@@ -95,25 +95,9 @@
 			$.ajax({
 				type: "GET"
 				,url: request
-				,dataType: "xml"
-				,success: function(xml){ 
-					if($(xml).find("frob").length>0)
-					{
-						frob = $(xml).find("frob").text();	
-						arr_frob = frob.split("-");
-						if(arr_frob.length>1)frob1 = arr_frob[0] + "-" + arr_frob[1];
-						console.log("Successfully retrieved frob: " + frob);
-						console.log("Successfully retrieved frob1: " + frob1);
-						//getToken();
-						//getLoginLink();
-					}
-					else
-					{
-						var code = $(xml).find("err").attr("code");	
-						var msg = $(xml).find("err").attr("msg");	
-						console.log("Flickr request failed with error code " + code + ", " + msg);
-						return;
-					}
+				,success: function(data){ 
+					var data1 = getParameterByName(frob);
+					console.log(data1);
 				}
 			});
 		}
@@ -178,6 +162,14 @@
 		 * token with write privileges, continue on to the FlickrRotate
 		 * example to see a live example of the Flickr API.
 		 */		    	
+
+
+		function getParameterByName(name) {
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+				results = regex.exec(location.search);
+			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
 
 		$(document).ready(function(){
 			getFrob();
