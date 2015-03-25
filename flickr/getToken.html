@@ -34,14 +34,14 @@
 		 * shown in the following line.
 		**/
 		var methodGetFrob = "flickr.auth.getFrob";
-		sig = secret + "api_key" + key + "method" + methodGetFrob;
+		sig = secret + "api_key" + key + "method" + methodGetFrob+permsread;
 		
 		/**
 		 * The API signature must be MD5 encoded and appended to the request
 		 */
 		signature = MD5(sig); 
 			
-		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&api_sig=" + signature;
+		request = "https://api.flickr.com/services/rest/?method=" + methodGetFrob + "&api_key=" + key + "&perms=read&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
 
 			$.ajax({
