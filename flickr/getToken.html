@@ -121,7 +121,7 @@
 			//BufferedReader infile = new BufferedReader ( new InputStreamReader (System.in) );
 			//var line = infile.readLine();
 		}
-			
+
 
 		function getToken()
 		{
@@ -129,10 +129,11 @@
 		 * Get auth token using frob. Once again, a signature is required
 		 * for authenticated calls to the Flickr API.  
 		 */
+		frob = getParameterByName("frob");
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
 		signature = CryptoJS.MD5(sig);
-		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		request = "https://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
 		console.log("Token request: " + request);
 
 			$.ajax({
@@ -173,7 +174,7 @@
 
 		$(document).ready(function(){
 			//getFrob();
-			alert(getParameterByName("frob"));
+			getToken();
 		});
 //-->
 </script>

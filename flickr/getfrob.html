@@ -93,7 +93,8 @@
 			
 		request = "https://flickr.com/services/auth/?" + "&api_key=" + key + "&perms=read&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
-		document.write(request);
+		froblink = "<a href='"+request+"'>Get Forb&Token</a>"
+		document.write(froblink);
 /*
 			$.ajax({
 				type: "GET"
