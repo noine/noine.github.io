@@ -93,7 +93,8 @@
 			
 		request = "https://flickr.com/services/auth/?" + "&api_key=" + key + "&perms=read&api_sig=" + signature;
 		console.log("GET frob request: " + request); 
-
+		document.write(request);
+/*
 			$.ajax({
 				type: "GET"
 				,url: request
@@ -102,6 +103,7 @@
 					console.log(data1);
 				}
 			});
+*/
 		}
 		
 		function getLoginLink()
