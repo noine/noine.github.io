@@ -144,7 +144,7 @@
 		console.log("Token request: " + request);
 			$.getJSON(request, 
 				function(data) {
-					eval("("+data+")");
+					eval(data);
 				//alert(data.result + ", " +  data.go);
 				}
 			);
