@@ -142,8 +142,9 @@
 				,dataType: "jsonp"
 				//,crossDomain: true
 				//,jsonp: "callback"
-				,success: function(xml){
-					console.log(xml);
+				,success: function(data){
+					console.log(data);
+					document.write(data);
 					/*
 					if($(xml).find("token").length>0)
 					{
