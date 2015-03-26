@@ -131,7 +131,7 @@
 		 */
 		frob = getParameterByName("frob");
 		var methodGetToken = "flickr.auth.getToken";
-		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
+		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken+"formatjson";
 		signature = MD5(sig);
 		request = "http://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&format=json&api_sig=" + signature;
 		console.log("Token request: " + request);
