@@ -135,12 +135,13 @@
 		signature = MD5(sig);
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&callback=?&api_sig=" + signature;
 		console.log("Token request: " + request);
-		$.getJSON(request, 
-			function(data) {
-				document.write(data);
-            //alert(data.result + ", " +  data.go);
-    }
-);
+			$.getJSON(request, 
+				function(data) {
+					document.write(data);
+				//alert(data.result + ", " +  data.go);
+				}
+			);
+		}
 /*
 			$.ajax({
 				type: "GET"
