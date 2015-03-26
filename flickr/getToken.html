@@ -133,7 +133,7 @@
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
 		signature = MD5(sig);
-		request = "http://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature + "&format=json";
+		request = "http://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature + "";
 		console.log("Token request: " + request);
 
 			$.ajax({
