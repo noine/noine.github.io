@@ -123,10 +123,8 @@
 		}
 
 		function jsonFlickrApi(response) {
-		  console.log(
-			 "Got response from Flickr-API with the following photos: %o", 
-			 response
-		  );
+		  console.log(response);
+		  alert(response);
 		  // Handle the response here. I.E update the DOM, trigger event handlers etc.
 		}
 
@@ -145,6 +143,7 @@
 			$.getJSON(request, 
 				function(data) {
 					eval(data);
+					alert("adF");
 				//alert(data.result + ", " +  data.go);
 				}
 			);
