@@ -140,24 +140,25 @@
 		signature = MD5(sig);
 		request = "https://api.flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature + "&format=json";
 		console.log("Token request: " + request);
+/*
 			$.getJSON(request, 
 				function(data) {
-					eval(data);
 					alert("adF");
+					eval(data);
 				//alert(data.result + ", " +  data.go);
 				}
 			);
 		}
-/*
+*/
 			$.ajax({
 				type: "GET"
 				,url: request
 				,dataType: "jsonp"
 				//,crossDomain: true
-				,jsonp: "callback"
+				//,jsonp: "callback"
 				,success: function(data){
 					console.log(data);
-					document.write(data);
+					eval(data);
 					/*
 					if($(xml).find("token").length>0)
 					{
@@ -172,11 +173,11 @@
 						console.log("Flickr request failed with error code " + code + ", " + msg);
 						console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
 					}
-					//
+					*/
 				}
 			});
 		}
-*/	
+	
 		/**
 		 * Now that we have authenticated with Flickr and obtained an auth
 		 * token with write privileges, continue on to the FlickrRotate
