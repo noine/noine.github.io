@@ -124,7 +124,7 @@
 
 		function jsonFlickrApi(response) {
 		  console.log(response);
-		  alert(response);
+		  //alert(response);
 		  // Handle the response here. I.E update the DOM, trigger event handlers etc.
 		}
 
@@ -155,9 +155,9 @@
 				,url: request
 				,dataType: "jsonp"
 				//,crossDomain: true
-				//,jsonp: "callback"
+				,jsonp: "jsoncallback"
 				,success: function(data){
-					console.log(data);
+					console.log("Token response: " + data);
 					eval(data);
 					/*
 					if($(xml).find("token").length>0)
