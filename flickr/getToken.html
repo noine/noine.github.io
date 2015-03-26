@@ -143,6 +143,7 @@
 				,jsonp: "callback"
 				,success: function(xml){
 					console.log(xml);
+					/*
 					if($(xml).find("token").length>0)
 					{
 						token = $(xml).find("token").text();	
@@ -156,6 +157,7 @@
 						console.log("Flickr request failed with error code " + code + ", " + msg);
 						console.log("Auth token not received. Fix this before moving on to FlickrRotate example.");
 					}
+					*/
 				}
 			});
 		}
