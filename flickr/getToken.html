@@ -133,14 +133,14 @@
 		var methodGetToken = "flickr.auth.getToken";
 		sig = secret + "api_key" + key + "frob" + frob + "method" + methodGetToken;
 		signature = MD5(sig);
-		request = "http://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature;
+		request = "http://flickr.com/services/rest/?method=" + methodGetToken + "&api_key=" + key + "&frob=" + frob + "&api_sig=" + signature+"&format=json&nojsoncallback=1";
 		console.log("Token request: " + request);
 
 			$.ajax({
 				type: "GET"
 				,url: request
-				,dataType: "xml"
-				,crossDomain: true
+				,dataType: "jsonp"
+				//,crossDomain: true
 				//,jsonp: "callback"
 				,success: function(xml){
 					console.log(xml);
