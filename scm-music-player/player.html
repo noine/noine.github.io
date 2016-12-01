@@ -100,7 +100,7 @@ body{ overflow:hidden; }
 </script>
 
 
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script -->
 <!-- scmplayer_main_top_right_ATF_336x280 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:336px;height:280px"
@@ -211,36 +211,6 @@ require([
 
 	'binding/slider',
 	'binding/scm'
-	],function(ko,$,_,parse,playerView,playlistView,wizardView,SCM){
-    SCM.gallery = ko.observableArray();
-
-		//Views
-		$("#playerW").html(playerView);
-		$("#playlistW").html(playlistView);
-		$("#wizard").html(wizardView);
-		$("#bsap_1299397").remove();
-
-		//hash params
-		var params = parse(location.hash.substr(1)); 
-		
-		//restore localStorage config
-		if(localStorage && localStorage['script']){
-			SCM.setScript(localStorage['script']);
-			$('#restoreTip').show()
-				.on('click','a',function(){
-					localStorage.removeItem('script');
-					$('#restoreTip').hide();
-				});
-		}
-
-		//hash config
-		SCM.config(params);
-		//if has params scroll to wizard
-		_(params).each(_.once(function(){
-			$('#containerW').scrollTo($('#setup'),{duration:0,axis:'Y'});
-		}));
-
-
 	],function(ko,$,_,playerView,playlistView,SCM,Song){
 		$("#playerW").html(playerView);
 		$("#playlistW").html(playlistView);
