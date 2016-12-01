@@ -89,7 +89,7 @@ body{ overflow:hidden; }
 
 
 <div style="border-radius:10px;padding:5px; text-align:center;background:url(ad.png) #eee center no-repeat;">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script -->
 <!-- scmplayer_main_top_left_ATF_336x280 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:336px;height:280px"
@@ -121,7 +121,7 @@ body{ overflow:hidden; }
 <div id="addons" style="clear:both;"></div>
 
 <div style="border-radius:10px;padding-top:20px;padding-bottom:10px; text-align:center;background:url(ad_h.png) #eee top center no-repeat; margin: 50px 0;">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script -->
 <!-- scmplayer_main_interleave_BTF_728x90 -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:728px;height:90px"
@@ -240,95 +240,49 @@ require([
 			$('#containerW').scrollTo($('#setup'),{duration:0,axis:'Y'});
 		}));
 
-		//track self hosted SCM 
-		if(SCM.baseURL()) ga('send','event', 'Self Hosted', SCM.baseURL());
 
-		//Knockout bindings
-		$('#skin,body').each(function(){
-			ko.applyBindings(SCM,this);
-		});
+	],function(ko,$,_,playerView,playlistView,SCM,Song){
+		$("#playerW").html(playerView);
+		$("#playlistW").html(playlistView);
 
-		SCM.step.subscribe(function(step){
-			//smooth scrolling
-			$('#containerW').scrollTo('#setup',{duration:200,axis:'Y'});
-			//export script
-			if(step==4){
-				//Done
-				var script = SCM.getScript();
-				$('#scriptDone').val(script);
-				if(localStorage) localStorage['script'] = script;
-
-				//track custom skins
-				if(SCM.skin()==params.skin) 
-					ga('send','event','Custom Skins',document.referrer, params.skin);
-			}
-		});
-		$('#importButton').click(function(){
-			//import script
-			SCM.setScript($('#importField').val())
-			SCM.step(1);
-		});
-		$('#scriptDone').click(function(){
-			//auto select all
-			this.focus();
-			this.select();
-		});
-		$('#container').on('click','a',function(e){
-			var href = $(this).attr('href');
-			//smooth scrolling
-			if(href.match(/#/)){
-				$('#containerW').scrollTo($(href),{duration:200,axis:'Y'});
-				e.preventDefault()
-			}
-			//external links
-      /*
-			if(href.indexOf('https://')==0 || (href.indexOf(location.host)==-1 &&
-			href.indexOf("http://")==0 ))	{
-				//external links
-				window.open(href,'_blank');
-				window.focus();
-				e.preventDefault();
-			}
-      */
+		var config = SCM.config;
+    var url = location.hash.substr(1);
+		SCM.config = _.once(function(data){
+			config(data);
+			ko.applyBindings(SCM,$('#skin').get(0));
+			setTimeout(function(){
+				$('#contentW,#playerW,#playlistW').each(function(){
+					ko.applyBindings(SCM,this);
+					$(this).mousedown(function(){
+						return false;
+					});
+				});
+        resize();
+			},200);
+      SCM.showPlaylist.subscribe(checkPlaylist);
+      checkPlaylist();
 		});
 
-		//autolist links
-		$('#autolist a').click(function(e){
-			SCM.autoPlaylist($(this).text());
-			e.preventDefault();
-		});
+		while(SCMQueue.length > 0)
+			(new Function('SCM,Song',SCMQueue.shift()))(SCM,Song);
+		window.SCM = SCM;
+		window.Song = Song;
 
-		//plus one, twitter, google analytics
-		require([
-			'http://platform.twitter.com/widgets.js'
-		]);
-    var shown = false;
-    function checkAd(){
+		var resize = function(){
+			$('#content').height($('#contentW').height());
+		}
+		$(window).resize(_.throttle(resize,100));
+
+    var shown = false, count = 0;
+    function checkPlaylist(){
+      //if((count > 0 || location.hash.indexOf('.blogspot.')===-1) && SCM.showPlaylist() && !shown){
+      //if(count > 0 && SCM.showPlaylist() && !shown){
       if(SCM.showPlaylist() && !shown){
         $.getScript('http://s3.buysellads.com/ac/bsa.js');
         shown = true;
       }
+      count++;
     }
-    SCM.showPlaylist.subscribe(checkAd);
-    checkAd();
-
-		$('.gallery').on('click','a',function(e){
-      $.colorbox({
-        href:$(this).attr('href'),
-        iframe: true, 
-        width: "940px", 
-        height:"670px",
-        opacity: 0.8
-      });
-			e.preventDefault();
-		});
-    $.ajax({
-      url:'/gallery.json', 
-      success: function(result){
-        var gallery = result.gallery;
-        SCM.gallery(gallery);
-      }
-    });
 	});
 </script>
 </body>
